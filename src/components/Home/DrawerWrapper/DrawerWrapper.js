@@ -77,7 +77,10 @@ const useStyles = makeStyles((theme) => ({
     content: {
         flexGrow: 1,
         padding: theme.spacing(0, 10),
-        backgroundColor: '#EEE'
+        backgroundColor: '#EEE',
+        [theme.breakpoints.down('sm')]: {
+            padding: theme.spacing(0, 5),
+        }
     },
     search: {
         display: 'flex',
