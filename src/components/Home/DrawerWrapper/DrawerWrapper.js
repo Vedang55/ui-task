@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'white',
         flexDirection: 'row',
         display: 'flex',
+        height: 60
     },
     menuButton: {
         marginRight: 36,
@@ -71,11 +72,11 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'flex-end',
         padding: theme.spacing(0, 1),
         // necessary for content to be below app bar
-        ...theme.mixins.toolbar,
+        height: 60
     },
     content: {
         flexGrow: 1,
-        padding: theme.spacing(3),
+        padding: theme.spacing(0, 10),
         backgroundColor: '#EEE'
     },
     search: {
@@ -241,7 +242,7 @@ export default function MiniDrawer(props) {
                         {rightDrawerOpen ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                     </IconButton>
                     {rightDrawerOpen ? <Typography variant='subtitle2'>
-                        FOLLOWED CHANNELS
+                        ONGOING CHATS
                     </Typography> : null}
                 </div>
                 <List>

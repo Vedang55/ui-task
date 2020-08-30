@@ -1,47 +1,100 @@
 import React from 'react';
 import DrawerWrapper from '../../components/Home/DrawerWrapper/DrawerWrapper'
 import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Container, useTheme } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+
+import Button from '@material-ui/core/Button';
+import StarBorder from '@material-ui/icons/StarBorder';
+import Chat from '@material-ui/icons/Chat';
+import KeyboardVoiceIcon from '@material-ui/icons/KeyboardVoice';
+import Icon from '@material-ui/core/Icon';
+import SaveIcon from '@material-ui/icons/Save';
 
 const useStyles = makeStyles(theme => ({
     root: {
 
+    },
+    banner: {
+        display: 'grid',
+        gridTemplateColumns: '0.1fr 1.8fr 0.7fr',
+        gridTemplateRows: '1fr',
+        gap: '30px',
+        alignItems: 'center'
+    },
+    bannerImage: {
+        width: '100%'
+    },
+    button: {
+        backgroundColor: '#9147ff',
+        display: 'flex',
+        justifyContent: 'flex-start',
+        padding: theme.spacing(1, 2),
+        borderRadius: 0,
+        color: 'black',
+        "& .buttonText": {
+            color: 'white'
+        }
     }
 }))
 
 const Home = () => {
     const classes = useStyles()
+    const theme = useTheme()
     return (
-        <div className={classes.root}>
-            <DrawerWrapper >
-                <Typography variant="h1">
-                    Hello
-                </Typography>
-                <Typography paragraph>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                    ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-                    facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-                    gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-                    donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-                    adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-                    Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-                    imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-                    arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-                    donec massa sapien faucibus et molestie ac.
-                </Typography>
-                <Typography paragraph>
-                    Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-                    facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-                    tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-                    consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-                    vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In
-                    hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et
-                    tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
-                    nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
-                    accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
-                </Typography>
-            </DrawerWrapper>
-        </div>
+        <DrawerWrapper >
+            <div className={classes.banner}>
+                <div>
+                    <img className={classes.bannerImage} src={"https://www.himalmag.com/wp-content/uploads/2019/07/sample-profile-picture.png"} />
+                </div>
+                <div style={{ backgroundColor: '#CCC', padding: theme.spacing(1, 3) }}>
+                    <Typography variant='h3'>
+                        Pokimane
+                    </Typography>
+                    <Typography variant='subtitle1'>
+                        Pokimane
+                    </Typography>
+                    <Typography variant='subtitle1'>
+                        Toronto Canada
+                    </Typography>
+                </div>
+
+                <div style={{
+                    justifySelf: 'center',
+                    display: 'flex',
+                    flexDirection: 'column'
+                }}>
+                    <Button
+                        fullWidth
+                        variant="text"
+                        className={classes.button}
+                        startIcon={<StarBorder />}
+                        style={{ marginBottom: 20 }}
+                    >
+                        <span className={'buttonText'}>
+                            Subscribe
+                        </span>
+                    </Button>
+
+                    <Button
+                        fullWidth
+                        variant="text"
+                        className={classes.button}
+                        startIcon={<Chat />}
+                    >
+                        <span className={'buttonText'}>
+                            Send Message
+                        </span>
+                    </Button>
+                </div>
+
+            </div>
+            <div className={classes.root}>
+
+            </div >
+        </DrawerWrapper >
+
     );
 };
 
