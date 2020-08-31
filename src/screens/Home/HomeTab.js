@@ -6,6 +6,7 @@ import StarBorder from '@material-ui/icons/StarBorder';
 import Chat from '@material-ui/icons/Chat';
 import colors from '../../assets/styling/colors'
 import Rating from '@material-ui/lab/Rating';
+import UserContent from '../../assets/data/Home/Usercontent'
 
 
 const ReadMoreButton = () => {
@@ -19,6 +20,32 @@ const ReadMoreButton = () => {
         </Typography>
     );
 };
+
+const ContentBox = (props) => {
+    const item = props.item
+    return (
+        <div
+            style={{ padding: 0 }}
+            {...props}>
+            <img style={{
+                width: "100%",
+                height: '75%',
+                objectFit: 'cover'
+            }}
+                src={item.thumbnail} />
+
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', }}>
+                <Typography gutterBottom variant="subtitle2">
+                    {item.title}
+                </Typography>
+
+                <Typography variant="subtitle2">
+                    {item.category}
+                </Typography>
+            </div>
+        </div>
+    )
+}
 
 
 const useStyles = makeStyles(theme => ({
@@ -41,8 +68,8 @@ const useStyles = makeStyles(theme => ({
                 // height: 300
             }
         },
-        [theme.breakpoints.down('lg')]: {
-
+        [theme.breakpoints.down('xs')]: {
+            gridGap: theme.spacing(5)
         },
         [theme.breakpoints.down('md')]: {
             gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
@@ -86,6 +113,9 @@ const useStyles = makeStyles(theme => ({
         },
         [theme.breakpoints.down('xs')]: {
             fontSize: '0.8em'
+        },
+        "&:hover": {
+            backgroundColor: colors.accent
         },
     },
 
@@ -146,10 +176,11 @@ const HomeTab = (props) => {
                 </div>
 
                 <div className={[classes.contentContainer, classes.gridContanier].join(" ")}>
-                    <div className={classes.overviewBoxes}></div>
-                    <div className={classes.overviewBoxes}></div>
-                    <div className={classes.overviewBoxes}></div>    <div className={classes.overviewBoxes}></div>
-
+                    {UserContent.map(item => {
+                        return (
+                            <ContentBox item={item} className={classes.overviewBoxes} />
+                        )
+                    })}
                 </div>
             </div>
         </div>

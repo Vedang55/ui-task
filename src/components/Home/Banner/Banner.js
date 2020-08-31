@@ -5,6 +5,7 @@ import { makeStyles, Container, useTheme, withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import StarBorder from '@material-ui/icons/StarBorder';
 import Chat from '@material-ui/icons/Chat';
+import colors from '../../../assets/styling/colors'
 
 
 import SocialMediaFollowers from '../SocialMediaFollowers/SocialMediaFollowers'
@@ -53,7 +54,7 @@ const useStyles = makeStyles(theme => ({
 
     },
     button: {
-        backgroundColor: '#9147ff',
+        backgroundColor: colors.accent,
         display: 'flex',
         justifyContent: 'flex-start',
         padding: theme.spacing(1, 2),
@@ -63,6 +64,9 @@ const useStyles = makeStyles(theme => ({
         color: 'black',
         "& .buttonText": {
             color: 'white'
+        },
+        "&:hover": {
+            backgroundColor: colors.accent
         },
         [theme.breakpoints.down('sm')]: {
             marginTop: theme.spacing(2),
@@ -121,7 +125,7 @@ const Home = () => {
 
             <div className={classes.buttonContainer}>
                 <Button
-                    variant="text"
+                    variant="contained"
                     className={classes.button}
                     startIcon={<StarBorder />}
                 >
@@ -131,7 +135,7 @@ const Home = () => {
                 </Button>
 
                 <Button
-                    variant="text"
+                    variant="contained"
                     className={classes.button}
                     startIcon={<Chat />}
                 >
