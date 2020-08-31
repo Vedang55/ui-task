@@ -9,12 +9,16 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import ProfileItem from '../Sidebar/ProfileItem';
+import DrawerComponent from './DrawerComponent/DrawerComponent';
 
 //icons
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import SearchIcon from '@material-ui/icons/Search';
-import ProfileItem from '../Sidebar/ProfileItem';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder'
+import MailOutline from '@material-ui/icons/MailOutline'
 
 const drawerWidth = 300;
 
@@ -39,33 +43,6 @@ const useStyles = makeStyles((theme) => ({
     hide: {
         display: 'none',
     },
-    drawer: {
-        width: drawerWidth,
-        flexShrink: 0,
-        whiteSpace: 'nowrap',
-    },
-    drawerOpen: {
-        width: drawerWidth,
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-        backgroundColor: '#DDD',
-        border: 'none'
-    },
-    drawerClose: {
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        overflowX: 'hidden',
-        width: theme.spacing(7) + 1,
-        [theme.breakpoints.up('sm')]: {
-            width: theme.spacing(9) + 1,
-        },
-        backgroundColor: '#5dbcdf',
-        border: 'none'
-    },
     toolbar: {
         display: 'flex',
         alignItems: 'center',
@@ -79,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(0, 10),
         backgroundColor: '#EEE',
         [theme.breakpoints.down('sm')]: {
-            padding: theme.spacing(0, 5),
+            padding: '0 3vw',
         }
     },
     search: {
@@ -131,6 +108,7 @@ const useStyles = makeStyles((theme) => ({
 export default function MiniDrawer(props) {
     const classes = useStyles();
     const theme = useTheme();
+    const mobileScreen = useMediaQuery(theme.breakpoints.down('xs'));
     const [leftDrawerOpen, setLeftDrawerOpen] = useState(false);
     const [rightDrawerOpen, setRightDrawerOpen] = useState(false);
 
@@ -145,6 +123,31 @@ export default function MiniDrawer(props) {
             setLeftDrawerOpen(false)
         }
     }, [rightDrawerOpen])
+
+    const RightDrawerContent = (
+        <React.Fragment>
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: mobileScreen ? 'flex-start' : (rightDrawerOpen ? 'space-between' : 'center'),
+                padding: theme.spacing(0, 2)
+            }}>
+                {!mobileScreen ? <IconButton onClick={() => { setRightDrawerOpen(state => !state) }}>
+                    {rightDrawerOpen ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                </IconButton> : null}
+
+                {rightDrawerOpen || (mobileScreen && leftDrawerOpen) ? <Typography variant='subtitle2'>
+                    ONGOING CHATS
+                </Typography> : null}
+            </div>
+            {(!rightDrawerOpen && !mobileScreen) || (!leftDrawerOpen && mobileScreen) ? <MailOutline style={{ alignSelf: 'center' }} /> : null}
+            <List>
+                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                    <ProfileItem open={rightDrawerOpen} text={text} />
+                ))}
+            </List>
+        </React.Fragment>
+    )
 
     return (
         <div className={classes.root}>
@@ -175,20 +178,9 @@ export default function MiniDrawer(props) {
             </AppBar>
 
             {/* Left drawer */}
-            <Drawer
-                variant="permanent"
-                className={clsx(classes.drawer, {
-                    [classes.drawerOpen]: leftDrawerOpen,
-                    [classes.drawerClose]: !leftDrawerOpen,
-                })}
-                classes={{
-                    paper: clsx({
-                        [classes.drawerOpen]: leftDrawerOpen,
-                        [classes.drawerClose]: !leftDrawerOpen,
-                    }),
-                }}
-            >
-                <div className={classes.toolbar}> </div>
+            <DrawerComponent
+                anchor="left"
+                state={[leftDrawerOpen, setLeftDrawerOpen]} >
                 <div style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -203,13 +195,20 @@ export default function MiniDrawer(props) {
                         {!leftDrawerOpen ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                     </IconButton>
                 </div>
+                {!leftDrawerOpen ? <FavoriteBorder style={{ alignSelf: 'center' }} /> : null}
                 <List>
                     {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
                         <ProfileItem open={leftDrawerOpen} text={text} />
                     ))}
                 </List>
 
-            </Drawer>
+                {mobileScreen ? (
+                    <React.Fragment>
+                        <Divider style={{ margin: theme.spacing(1, 0) }} />
+                        {RightDrawerContent}
+                    </React.Fragment>
+                ) : null}
+            </DrawerComponent>
 
             {/* Main Content */}
             <main className={classes.content}>
@@ -219,42 +218,14 @@ export default function MiniDrawer(props) {
 
 
             {/* Right drawer */}
+            {!mobileScreen ? (
+                <DrawerComponent
+                    state={[rightDrawerOpen, setRightDrawerOpen]}
+                    anchor='right'>
 
-            <Drawer
-                anchor='right'
-                variant="permanent"
-                className={clsx(classes.drawer, {
-                    [classes.drawerOpen]: rightDrawerOpen,
-                    [classes.drawerClose]: !rightDrawerOpen,
-                })}
-                classes={{
-                    paper: clsx({
-                        [classes.drawerOpen]: rightDrawerOpen,
-                        [classes.drawerClose]: !rightDrawerOpen,
-                    }),
-                }}
-            >
-                <div className={classes.toolbar}> </div>
-                <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: rightDrawerOpen ? 'space-between' : 'center',
-                    padding: theme.spacing(0, 2)
-                }}>
-                    <IconButton onClick={() => { setRightDrawerOpen(state => !state) }}>
-                        {rightDrawerOpen ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                    </IconButton>
-                    {rightDrawerOpen ? <Typography variant='subtitle2'>
-                        ONGOING CHATS
-                    </Typography> : null}
-                </div>
-                <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ProfileItem open={rightDrawerOpen} text={text} />
-                    ))}
-                </List>
-
-            </Drawer>
+                    {RightDrawerContent}
+                </DrawerComponent>
+            ) : null}
 
         </div>
     );
