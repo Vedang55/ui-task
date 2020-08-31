@@ -1,9 +1,7 @@
 import React, { useState, useLayoutEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, fade } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -19,7 +17,10 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import SearchIcon from '@material-ui/icons/Search';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder'
 import MailOutline from '@material-ui/icons/MailOutline'
+import NaturePeople from '@material-ui/icons/NaturePeople'
 
+//data
+import { followedChannels, recommendedChannels } from '../../../assets/data/sidebars/left'
 const drawerWidth = 300;
 
 const useStyles = makeStyles((theme) => ({
@@ -102,7 +103,8 @@ const useStyles = makeStyles((theme) => ({
             height: 50,
             alignSelf: 'center'
         }
-    }
+    },
+    headerWithoutIcon: { padding: theme.spacing(1, 2) }
 }));
 
 export default function MiniDrawer(props) {
@@ -136,14 +138,15 @@ export default function MiniDrawer(props) {
                     {rightDrawerOpen ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                 </IconButton> : null}
 
-                {rightDrawerOpen || (mobileScreen && leftDrawerOpen) ? <Typography variant='subtitle2'>
+                {rightDrawerOpen || (mobileScreen && leftDrawerOpen) ? <Typography className={mobileScreen ? classes.headerWithoutIcon : undefined}
+                    style={{ paddingLeft: 0, paddingRight: 0 }} variant='subtitle2'>
                     ONGOING CHATS
                 </Typography> : null}
             </div>
             {(!rightDrawerOpen && !mobileScreen) || (!leftDrawerOpen && mobileScreen) ? <MailOutline style={{ alignSelf: 'center' }} /> : null}
             <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ProfileItem open={rightDrawerOpen} text={text} />
+                {followedChannels.map((item, index) => (
+                    <ProfileItem followedChannels open={leftDrawerOpen} item={item} />
                 ))}
             </List>
         </React.Fragment>
@@ -181,6 +184,8 @@ export default function MiniDrawer(props) {
             <DrawerComponent
                 anchor="left"
                 state={[leftDrawerOpen, setLeftDrawerOpen]} >
+
+                {/* Followed channels */}
                 <div style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -197,17 +202,34 @@ export default function MiniDrawer(props) {
                 </div>
                 {!leftDrawerOpen ? <FavoriteBorder style={{ alignSelf: 'center' }} /> : null}
                 <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ProfileItem open={leftDrawerOpen} text={text} />
+                    {followedChannels.map((item, index) => (
+                        <ProfileItem followedChannels open={leftDrawerOpen} item={item} />
                     ))}
                 </List>
 
+
+                {/* Recommended channels */}
+                {leftDrawerOpen ? (
+                    <Typography className={classes.headerWithoutIcon} variant='subtitle2'>
+                        RECOMMENDED CHANNELS
+                    </Typography>
+                ) : <NaturePeople style={{ alignSelf: 'center' }} />}
+
+                <List>
+                    {recommendedChannels.map((item, index) => (
+                        <ProfileItem recommendedChannels open={leftDrawerOpen} item={item} />
+                    ))}
+                </List>
+
+
+                {/* Right drawer content onto the left drawer on mobile */}
                 {mobileScreen ? (
                     <React.Fragment>
-                        <Divider style={{ margin: theme.spacing(1, 0) }} />
                         {RightDrawerContent}
                     </React.Fragment>
                 ) : null}
+
+
             </DrawerComponent>
 
             {/* Main Content */}

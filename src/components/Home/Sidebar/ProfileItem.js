@@ -29,6 +29,8 @@ const ProfileItem = (props) => {
     const open = props.open
     const classes = useStyles();
     const theme = useTheme();
+    const item = props.item
+    const followedChannels = props.followedChannels
     return (
         <ListItem
             className={classes.root}
@@ -36,24 +38,31 @@ const ProfileItem = (props) => {
             <div>
                 <img
                     className={classes.profileImage}
-                    src="https://www.himalmag.com/wp-content/uploads/2019/07/sample-profile-picture.png" />
+                    src={item.image ? item.image : "https://www.alchinlong.com/wp-content/uploads/2015/09/sample-profile.png"} />
             </div>
 
             <div className={classes.openSection}>
                 <div style={{ flexGrow: 1 }}>
                     <Typography>
-                        pokimane
-                        </Typography>
+                        {item.user}
+                    </Typography>
                     <Typography variant="caption">
-                        5 new videos
-                        </Typography>
+                        {followedChannels ? `${item.newVideos} new videos` : item.category}
+                    </Typography>
                 </div>
 
-                <div>
-                    <Typography variant="caption">
-                        Offline
-                        </Typography>
-                </div>
+                <Typography variant="caption">
+                    {followedChannels ? (item.status ? "Online" : "Offline") : (
+                        <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                        }}>
+                            <div style={{ height: 10, width: 10, backgroundColor: 'red', marginRight: 5 }}></div>
+                            <span>{item.count}</span>
+                        </div>
+                    )}
+                </Typography>
+
             </div>
 
 
