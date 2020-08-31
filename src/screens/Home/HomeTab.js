@@ -63,7 +63,8 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(2),
         backgroundColor: "white",
         "& > div": {
-            height: 280,
+            height: '22em',
+            minHeight: 280,
             [theme.breakpoints.down('md')]: {
                 // height: 300
             }

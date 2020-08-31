@@ -6,6 +6,10 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import ProfileItem from '../../Sidebar/ProfileItem';
 import IconButton from '@material-ui/core/IconButton';
+import InputBase from '@material-ui/core/InputBase';
+
+import SearchIcon from '@material-ui/icons/Search';
+import { Divider } from '@material-ui/core';
 
 const drawerWidth = 300;
 
@@ -15,6 +19,14 @@ const useStyles = makeStyles((theme) => ({
     },
     paper: {
         border: 'none',
+        "&::-webkit-scrollbar, & *::-webkit-scrollbar": {
+            display: 'none'
+        },
+        "&, & *": {
+            "-ms-overflow-style": "none",
+            "scrollbar-width": "none",
+        }
+
     },
     drawer: {
         width: drawerWidth,
@@ -48,6 +60,37 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'flex-end',
         // necessary for content to be below app bar
         paddingTop: 60
+    },
+    search: {
+        display: 'flex',
+        padding: theme.spacing(2, 1, 2, 1),
+        bottom: 0,
+        width: '100%',
+        borderTop: '1px solid #CCC'
+    },
+    searchIcon: {
+        color: 'black',
+        padding: theme.spacing(1),
+        display: 'flex',
+        alignItems: 'center',
+        backgroundColor: '#EEE',
+        borderTopRightRadius: 5,
+        borderBottomRightRadius: 5,
+    },
+    inputRoot: {
+        backgroundColor: '#EEE',
+        marginRight: 3,
+        borderTopLeftRadius: 5,
+        borderBottomLeftRadius: 5,
+        flexGrow: 1
+    },
+    inputInput: {
+        padding: theme.spacing(1, 1, 1, 2),
+        transition: theme.transitions.create('width'),
+        color: 'black',
+    },
+    barContent: {
+        display: 'flex', flexDirection: 'column', flexGrow: 1, overflowY: 'scroll', overflowX: 'hidden',
     }
 }));
 
@@ -72,7 +115,24 @@ const DrawerComponent = (props) => {
             }}
         >
             <div className={classes.toolbar}> </div>
-            {props.children}
+            <div className={classes.barContent}>
+                {props.children}
+            </div>
+
+            {leftDrawerOpen ? (<div className={classes.search}>
+                <InputBase
+                    placeholder="Search…"
+                    classes={{
+                        root: classes.inputRoot,
+                        input: classes.inputInput,
+                    }}
+                    inputProps={{ 'aria-label': 'search' }}
+                />
+                <div className={classes.searchIcon}>
+                    <SearchIcon />
+                </div>
+            </div>) : null}
+
 
         </Drawer >
     );
