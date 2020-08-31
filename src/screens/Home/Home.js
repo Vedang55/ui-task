@@ -5,15 +5,10 @@ import Box from '@material-ui/core/Box';
 import { makeStyles, Container, useTheme, withStyles } from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-
 import Button from '@material-ui/core/Button';
 import StarBorder from '@material-ui/icons/StarBorder';
 import Chat from '@material-ui/icons/Chat';
-import KeyboardVoiceIcon from '@material-ui/icons/KeyboardVoice';
-import Icon from '@material-ui/core/Icon';
-import SaveIcon from '@material-ui/icons/Save';
+
 
 import SocialMediaFollowers from '../../components/Home/SocialMediaFollowers/SocialMediaFollowers'
 
@@ -22,14 +17,43 @@ const useStyles = makeStyles(theme => ({
 
     },
     banner: {
-        display: 'grid',
-        gridTemplateColumns: '80px 1.8fr 0.7fr',
-        gridTemplateRows: '1fr',
-        gap: '30px',
-        alignItems: 'center'
+        display: 'flex',
+        flexWrap: 'wrap',
+        [theme.breakpoints.down('sm')]: {
+            justifyContent: 'center',
+        },
+        "& > div:nth-child(1)": {
+            alignSelf: 'center',
+            marginRight: 30,
+            [theme.breakpoints.down('sm')]: {
+                marginRight: 0
+            }
+        },
+        "& > div:nth-child(2)": {
+            flexGrow: 5,
+            backgroundColor: '#CCC', padding: theme.spacing(1, 3)
+        },
+        "& > div:nth-child(3)": {
+            flexGrow: 2.5,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'space-evenly',
+            [theme.breakpoints.down('md')]: {
+                flexDirection: 'row'
+            },
+            [theme.breakpoints.down('xs')]: {
+                flexDirection: 'column'
+            }
+        },
     },
+
+
     bannerImage: {
-        width: '100%'
+        width: '100%',
+        maxWidth: '80px',
+        objectFit: 'contain',
+
     },
     button: {
         backgroundColor: '#9147ff',
@@ -37,16 +61,18 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'flex-start',
         padding: theme.spacing(1, 2),
         borderRadius: 0,
+        minWidth: '13em',
         color: 'black',
         "& .buttonText": {
             color: 'white'
         }
     },
     followersContainers: {
-        display: 'grid;',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-        gap: '50px',
-        gridRowGap: '20px'
+        display: 'flex',
+        flexWrap: 'wrap',
+        [theme.breakpoints.down('xs')]: {
+            flexDirection: 'column'
+        }
     },
     tabsNav: {
         marginTop: 30
@@ -62,7 +88,7 @@ const StyledTabs = withStyles({
             maxWidth: 40,
             width: '100%',
             backgroundColor: 'blue',
-        },
+        }
     },
 })((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />);
 
@@ -95,23 +121,23 @@ const Home = () => {
             <div className={classes.root}>
                 <div className={classes.banner}>
                     <div>
-                        <img className={classes.bannerImage} src={"https://www.himalmag.com/wp-content/uploads/2019/07/sample-profile-picture.png"} />
+                        <img className={classes.bannerImage} src={"https://tcap.pbworks.com/f/1435170280/myAvatar.png"} />
                     </div>
-                    <div style={{ backgroundColor: '#CCC', padding: theme.spacing(1, 3) }}>
+                    <div>
                         <Typography variant='h4'>
                             <Box fontWeight={'600'}>
-                                Pokimane
-                        </Box>
+                                John Blake
+                            </Box>
                         </Typography>
                         <Typography variant='subtitle1'>
                             <Box fontWeight={'500'}>
                                 Saas business coach
-                        </Box>
+                            </Box>
                         </Typography>
                         <Typography variant='subtitle1'>
                             <Box fontWeight={'500'}>
                                 Toronto Canada
-                        </Box>
+                            </Box>
                         </Typography>
 
                         <div className={classes.followersContainers}>
@@ -122,16 +148,11 @@ const Home = () => {
                         </div>
                     </div>
 
-                    <div style={{
-                        justifySelf: 'center',
-                        display: 'flex',
-                        flexDirection: 'column'
-                    }}>
+                    <div className={classes.buttonContainer}>
                         <Button
                             variant="text"
                             className={classes.button}
                             startIcon={<StarBorder />}
-                            style={{ marginBottom: 20 }}
                         >
                             <span className={'buttonText'}>
                                 Subscribe
@@ -151,7 +172,7 @@ const Home = () => {
 
                 </div>
 
-                <div className={classes.tabsNav}>
+                {/* <div className={classes.tabsNav}>
                     <StyledTabs value={value} onChange={handleChange} aria-label="styled tabs example">
                         <StyledTab label="Home" />
                         <StyledTab label="About" />
@@ -159,11 +180,18 @@ const Home = () => {
                         <StyledTab label="Reviews" />
                     </StyledTabs>
                     <Typography className={classes.padding} />
-                </div>
+                </div> */}
             </div >
         </DrawerWrapper >
 
     );
 };
+
+function a11yProps(index) {
+    return {
+        id: `scrollable-auto-tab-${index}`,
+        'aria-controls': `scrollable-auto-tabpanel-${index}`,
+    };
+}
 
 export default Home;

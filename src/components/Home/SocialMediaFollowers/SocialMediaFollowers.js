@@ -4,7 +4,7 @@ import { Box } from '@material-ui/core';
 
 const SocialMediaFollowers = (props) => {
     return (
-        <div style={{ display: 'flex', }}>
+        <div style={{ display: 'flex', marginRight: 20, marginBottom: 10, marginTop: 10 }}>
             <img style={{
                 width: 25,
                 marginRight: 10
