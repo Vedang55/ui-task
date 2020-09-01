@@ -2,7 +2,8 @@ export default {
     details: {
         name: 'John Blake',
         title: "Saas business coach",
-        location: "Toronto Canada"
+        location: "Toronto Canada",
+        image: "https://tcap.pbworks.com/f/1435170280/myAvatar.png"
     },
     followers: [
         {

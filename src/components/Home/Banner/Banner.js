@@ -99,7 +99,7 @@ const Home = () => {
 
         <div className={classes.banner}>
             <div>
-                <img className={classes.bannerImage} src={"https://tcap.pbworks.com/f/1435170280/myAvatar.png"} />
+                <img className={classes.bannerImage} src={UserProfile.details.image} />
             </div>
             <div>
                 <Typography variant='h4'>
