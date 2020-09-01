@@ -241,7 +241,8 @@ export default function DrawerWrapper(props) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: mobileScreen ? 'flex-start' : (rightDrawerOpen ? 'space-between' : 'center'),
-                padding: theme.spacing(0, 2)
+                padding: theme.spacing(0, 2),
+                flexShrink: 0
             }}>
                 {!mobileScreen ? <IconButton onClick={() => { setRightDrawerOpen(state => !state) }}>
                     {rightDrawerOpen ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -333,7 +334,8 @@ export default function DrawerWrapper(props) {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: leftDrawerOpen ? 'space-between' : 'center',
-                    padding: theme.spacing(0, 2)
+                    padding: theme.spacing(0, 2),
+                    flexShrink: 0
                 }}>
                     {leftDrawerOpen ? <Typography variant='subtitle2'>
                         FOLLOWED CHANNELS
