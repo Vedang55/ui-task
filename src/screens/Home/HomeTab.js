@@ -6,7 +6,10 @@ import StarBorder from '@material-ui/icons/StarBorder';
 import Chat from '@material-ui/icons/Chat';
 import colors from '../../assets/styling/colors'
 import Rating from '@material-ui/lab/Rating';
+
+//data
 import UserContent from '../../assets/data/Home/Usercontent'
+import UserProfile from '../../assets/data/Home/UserProfile'
 
 
 const ReadMoreButton = () => {
@@ -155,7 +158,7 @@ const HomeTab = (props) => {
                             About Me
                     </Typography>
 
-                        {["Marketing", "Startups", "Early Stage Funding", "Product Design"].map(item => {
+                        {[...UserProfile.aboutMe].splice(0, 4).map(item => {
                             return (<Typography variant="h5" gutterBottom>
                                 {item}
                             </Typography>
@@ -167,10 +170,10 @@ const HomeTab = (props) => {
                     <div className={classes.overviewBoxes}>
                         <Typography style={{ color: colors.accent, marginBottom: theme.spacing(2), display: 'flex', justifyContent: 'space-between' }} variant="h5">
                             Reviews
-                        <Rating name="read-only" value={4} readOnly />
+                        <Rating name="read-only" value={UserProfile.review.stars} readOnly />
                         </Typography>
                         <Typography variant="h5">
-                            Mike has worked out a brilliant model for quity sharing., he's got an answer for everything
+                            {UserProfile.review.text}
                         </Typography>
                         <ReadMoreButton />
                     </div>

@@ -4,10 +4,12 @@ import { Box } from '@material-ui/core';
 
 const SocialMediaFollowers = (props) => {
     return (
-        <div style={{ display: 'flex', marginRight: 20, marginBottom: 10, marginTop: 10 }}>
+        <div style={{ display: 'flex', marginRight: 20, marginBottom: 10, marginTop: 10, alignItems: "center" }}>
             <img style={{
                 width: 25,
-                marginRight: 10
+                height: 25,
+                marginRight: 10,
+                objectFit: "contain"
             }} src={props.image} />
 
             <Typography noWrap variant="caption">

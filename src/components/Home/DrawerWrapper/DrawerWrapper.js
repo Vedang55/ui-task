@@ -11,6 +11,12 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ProfileItem from '../Sidebar/ProfileItem';
 import DrawerComponent from './DrawerComponent/DrawerComponent';
 
+
+import Badge from '@material-ui/core/Badge';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+
+
 //icons
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -18,9 +24,17 @@ import SearchIcon from '@material-ui/icons/Search';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder'
 import MailOutline from '@material-ui/icons/MailOutline'
 import NaturePeople from '@material-ui/icons/NaturePeople'
+import MenuIcon from '@material-ui/icons/Menu';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import MailIcon from '@material-ui/icons/Mail';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import MoreIcon from '@material-ui/icons/MoreVert';
 
 //data
 import { followedChannels, recommendedChannels } from '../../../assets/data/sidebars/left'
+import { onGoingChats } from '../../../assets/data/sidebars/right'
+import Badges from '../../../assets/data/Appbar/Badges'
+
 const drawerWidth = 300;
 
 const useStyles = makeStyles((theme) => ({
@@ -37,9 +51,6 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         display: 'flex',
         height: 60
-    },
-    menuButton: {
-        marginRight: 36,
     },
     hide: {
         display: 'none',
@@ -62,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
     },
     search: {
         display: 'flex',
-        padding: theme.spacing(1, 0)
+        padding: theme.spacing(1, 1)
     },
     searchIcon: {
         color: 'black',
@@ -104,15 +115,113 @@ const useStyles = makeStyles((theme) => ({
             alignSelf: 'center'
         }
     },
-    headerWithoutIcon: { padding: theme.spacing(1, 2) }
+    headerWithoutIcon: { padding: theme.spacing(1, 2) },
+    sectionDesktop: {
+        display: 'none',
+        color: "black",
+        margin: theme.spacing(0, 2, 0, 0),
+        [theme.breakpoints.up('md')]: {
+            display: 'flex',
+        },
+    },
+    sectionMobile: {
+        display: 'flex',
+        color: "black",
+        padding: theme.spacing(0, 1, 0, 0),
+        [theme.breakpoints.up('md')]: {
+            display: 'none',
+        },
+    },
 }));
 
-export default function MiniDrawer(props) {
+export default function DrawerWrapper(props) {
     const classes = useStyles();
     const theme = useTheme();
     const mobileScreen = useMediaQuery(theme.breakpoints.down('xs'));
     const [leftDrawerOpen, setLeftDrawerOpen] = useState(false);
     const [rightDrawerOpen, setRightDrawerOpen] = useState(false);
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+    const isMenuOpen = Boolean(anchorEl);
+    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+    const handleProfileMenuOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMobileMenuClose = () => {
+        setMobileMoreAnchorEl(null);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+        handleMobileMenuClose();
+    };
+
+
+    const handleMobileMenuOpen = (event) => {
+        setMobileMoreAnchorEl(event.currentTarget);
+    };
+
+    const menuId = 'primary-search-account-menu';
+    const renderMenu = (
+        <Menu
+            anchorEl={anchorEl}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            id={menuId}
+            keepMounted
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            open={isMenuOpen}
+            onClose={handleMenuClose}
+        >
+            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+        </Menu>
+    );
+
+    const mobileMenuId = 'primary-search-account-menu-mobile';
+    const renderMobileMenu = (
+        <Menu
+            anchorEl={mobileMoreAnchorEl}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            id={mobileMenuId}
+            keepMounted
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            open={isMobileMenuOpen}
+            onClose={handleMobileMenuClose}
+        >
+            <MenuItem>
+                <IconButton aria-label="show 11 new notifications" color="inherit">
+                    <Badge badgeContent={Badges.notifications} color="secondary">
+                        <NotificationsIcon />
+                    </Badge>
+                </IconButton>
+                <p>Notifications</p>
+            </MenuItem>
+            <MenuItem>
+                <IconButton aria-label="show 4 new mails" color="inherit">
+                    <Badge badgeContent={Badges.messages} color="secondary">
+                        <MailIcon />
+                    </Badge>
+                </IconButton>
+                <p>Messages</p>
+            </MenuItem>
+
+            <MenuItem onClick={handleProfileMenuOpen}>
+                <IconButton
+                    aria-label="account of current user"
+                    aria-controls="primary-search-account-menu"
+                    aria-haspopup="true"
+                    color="inherit"
+                >
+                    <AccountCircle />
+                </IconButton>
+                <p>Profile</p>
+            </MenuItem>
+        </Menu>
+    );
 
     useLayoutEffect(() => {
         if (leftDrawerOpen) {
@@ -145,7 +254,7 @@ export default function MiniDrawer(props) {
             </div>
             {(!rightDrawerOpen && !mobileScreen) || (!leftDrawerOpen && mobileScreen) ? <MailOutline style={{ alignSelf: 'center' }} /> : null}
             <List>
-                {followedChannels.map((item, index) => (
+                {onGoingChats.map((item, index) => (
                     <ProfileItem followedChannels open={leftDrawerOpen} item={item} />
                 ))}
             </List>
@@ -154,7 +263,6 @@ export default function MiniDrawer(props) {
 
     return (
         <div className={classes.root}>
-
             <AppBar
                 elevation={0}
                 position="fixed"
@@ -177,8 +285,43 @@ export default function MiniDrawer(props) {
                         </div>
                     </div>
                 </div>
+                <div className={classes.sectionDesktop}>
+                    <IconButton aria-label="show 17 new notifications" color="inherit">
+                        <Badge badgeContent={17} color="secondary">
+                            <NotificationsIcon />
+                        </Badge>
+                    </IconButton>
+                    <IconButton aria-label="show 4 new mails" color="inherit">
+                        <Badge badgeContent={4} color="secondary">
+                            <MailIcon />
+                        </Badge>
+                    </IconButton>
+                    <IconButton
+                        edge="end"
+                        aria-label="account of current user"
+                        aria-controls={menuId}
+                        aria-haspopup="true"
+                        onClick={handleProfileMenuOpen}
+                        color="inherit"
+                    >
+                        <AccountCircle />
+                    </IconButton>
+                </div>
+                <div className={classes.sectionMobile}>
+                    <IconButton
+                        aria-label="show more"
+                        aria-controls={mobileMenuId}
+                        aria-haspopup="true"
+                        onClick={handleMobileMenuOpen}
+                        color="inherit"
+                    >
+                        <MoreIcon />
+                    </IconButton>
+                </div>
 
             </AppBar>
+            {renderMobileMenu}
+            {renderMenu}
 
             {/* Left drawer */}
             <DrawerComponent

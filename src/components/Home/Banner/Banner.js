@@ -7,6 +7,9 @@ import StarBorder from '@material-ui/icons/StarBorder';
 import Chat from '@material-ui/icons/Chat';
 import colors from '../../../assets/styling/colors'
 
+//data import
+import UserProfile from '../../../assets/data/Home/UserProfile'
+
 
 import SocialMediaFollowers from '../SocialMediaFollowers/SocialMediaFollowers'
 
@@ -101,25 +104,22 @@ const Home = () => {
             <div>
                 <Typography variant='h4'>
                     <Box fontWeight={'600'}>
-                        John Blake
-                            </Box>
+                        {UserProfile.details.name}
+                    </Box>
                 </Typography>
                 <Typography variant='subtitle1'>
                     <Box fontWeight={'500'}>
-                        Saas business coach
-                            </Box>
+                        {UserProfile.details.title}
+                    </Box>
                 </Typography>
                 <Typography variant='subtitle1'>
                     <Box fontWeight={'500'}>
-                        Toronto Canada
-                            </Box>
+                        {UserProfile.details.location}
+                    </Box>
                 </Typography>
 
                 <div className={classes.followersContainers}>
-                    <SocialMediaFollowers text="360k suscribers" image="https://www.northstar-alliance.org/wp-content/uploads/cache/2019/08/youtube-logo/609778702.jpg" />
-                    <SocialMediaFollowers text="360k followers" image="https://3.bp.blogspot.com/-NxouMmz2bOY/T8_ac97cesI/AAAAAAAAGg0/e3vY1_bdnbE/s1600/Twitter+logo+2012.png" />
-                    <SocialMediaFollowers text="360k suscribers" image="https://www.northstar-alliance.org/wp-content/uploads/cache/2019/08/youtube-logo/609778702.jpg" />
-                    <SocialMediaFollowers text="360k suscribers" image="https://www.northstar-alliance.org/wp-content/uploads/cache/2019/08/youtube-logo/609778702.jpg" />
+                    {UserProfile.followers.map(item => <SocialMediaFollowers key={item.text + item.image} text={item.text} image={item.image} />)}
                 </div>
             </div>
 

@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding-right: 0 !important;
 }
 
 html, body {
@@ -18,4 +19,8 @@ code {
 
 * {
   box-sizing: border-box;
+}
+
+.MuiAppBar-root {
+  padding-right: 0 !important;
 }
